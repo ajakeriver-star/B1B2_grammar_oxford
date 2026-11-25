@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intermediate English Placement & Exit Exam (B1-B2)</title>
+  <style>
+    :root {
+      --color-primary: #1e40af;
+      --color-primary-hover: #1e3a8a;
+      --color-secondary: #0f766e;
+      --color-secondary-hover: #115e59;
+      --color-pdf: #991b1b;
+      --color-pdf-hover: #7f1d1d;
+      --color-bg: #f1f5f9;
+      --color-surface: #ffffff;
+      --color-text: #0f172a;
+      --color-text-muted: #475569;
+      --color-border: #cbd5e1;
+      --color-error: #b91c1c;
+      --color-success: #15803d;
+      --color-warning: #b45309;
+      --focus-ring: 0 0 0 3px rgba(30, 64, 175, 0.45);
+      --radius: 10px;
+      --shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    :focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+
+    .header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #ffffff;
+      padding: 2.5rem 1.25rem;
+      text-align: center;
+    }
+
+    .header__container {
+      max-width: 840px;
+      margin: 0 auto;
+    }
+
+    .header__badge {
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.25rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.75rem;
+    }
+
+    .header__title {
+      margin: 0 0 0.5rem;
+      font-size: clamp(1.6rem, 4vw, 2.25rem);
+      font-weight: 800;
+    }
+
+    .header__subtitle {
+      margin: 0;
+      color: #e2e8f0;
+      font-size: 1rem;
+    }
+
+    .main {
+      max-width: 840px;
+      margin: -1.5rem auto 3rem;
+      padding: 0 1rem;
+    }
+
+    /* Barra superior sticky con progreso, cronómetro e integridad */
+    .status-bar {
+      background: var(--color-surface);
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+      position: sticky;
+      top: 0.75rem;
+      z-index: 20;
+      border: 1px solid var(--color-border);
+    }
+
+    .status-bar__top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .status-bar__metrics {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .metric-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: #f8fafc;
+      border: 1px solid var(--color-border);
+      padding: 0.2rem 0.65rem;
+      border-radius: 6px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric-pill--timer {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: var(--color-primary);
+    }
+
+    .metric-pill--warning {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: var(--color-error);
+    }
+
+    .progress-bar {
+      height: 9px;
+      background-color: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar__fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--color-primary);
+      transition: width 0.3s ease;
+    }
+
+    .tab-alert {
+      background-color: #fef2f2;
+      border: 1px solid #fecaca;
+      color: var(--color-error);
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      display: none;
+    }
+
+    .card {
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--color-border);
+    }
+
+    .card__title {
+      margin: 0 0 0.35rem;
+      font-size: 1.25rem;
+      color: var(--color-primary);
+    }
+
+    .card__desc {
+      margin: 0 0 1.25rem;
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .form-group--full {
+        grid-column: 1 / -1;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group__label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .form-group__input {
+      padding: 0.65rem 0.85rem;
+      border: 1.5px solid var(--color-border);
+      border-radius: 6px;
+      font-size: 1rem;
+      color: var(--color-text);
+      transition: border-color 0.2s;
+    }
+
+    .form-group__input:focus {
+      border-color: var(--color-primary);
+    }
+
+    .form-group__input[aria-invalid="true"] {
+      border-color: var(--color-error);
+    }
+
+    .form-group__error {
+      color: var(--color-error);
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-top: 0.25rem;
+      min-height: 1.1em;
+    }
+
+    .questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .question-item {
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      background-color: #f8fafc;
+      transition: border-color 0.2s;
+      user-select: none; /* Dificulta copiar enunciados */
+    }
+
+    .question-item--unanswered {
+      border: 2px solid var(--color-error);
+      background-color: #fef2f2;
+    }
+
+    .question-item__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .question-item__prompt {
+      font-weight: 600;
+      font-size: 1.02rem;
+      margin: 0;
+    }
+
+    .question-item__topic {
+      font-size: 0.75rem;
+      background: #e2e8f0;
+      color: #334155;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    @media (min-width: 600px) {
+      .options-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 0.85rem;
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.15s ease;
+    }
+
+    .option-label:hover {
+      border-color: var(--color-primary);
+      background-color: #eff6ff;
+    }
+
+    .option-label input[type="radio"] {
+      accent-color: var(--color-primary);
+      width: 1.1rem;
+      height: 1.1rem;
+      margin: 0;
+    }
+
+    .option-label--correct {
+      background-color: #dcfce7 !important;
+      border-color: var(--color-success) !important;
+      font-weight: 600;
+    }
+
+    .option-label--incorrect {
+      background-color: #fee2e2 !important;
+      border-color: var(--color-error) !important;
+    }
+
+    .actions, .results-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.96rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+
+    .btn--primary {
+      background-color: var(--color-primary);
+      color: #ffffff;
+      flex: 1 1 220px;
+    }
+
+    .btn--primary:hover:not(:disabled) {
+      background-color: var(--color-primary-hover);
+    }
+
+    .btn--secondary {
+      background-color: var(--color-secondary);
+      color: #ffffff;
+      flex: 1 1 200px;
+    }
+
+    .btn--secondary:hover:not(:disabled) {
+      background-color: var(--color-secondary-hover);
+    }
+
+    .btn--pdf {
+      background-color: var(--color-pdf);
+      color: #ffffff;
+      flex: 1 1 200px;
+    }
+
+    .btn--pdf:hover:not(:disabled) {
+      background-color: var(--color-pdf-hover);
+    }
+
+    .btn--outline {
+      background-color: transparent;
+      color: var(--color-primary);
+      border: 1.5px solid var(--color-primary);
+      flex: 1 1 200px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .results-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .results-header__title {
+      margin: 0;
+      font-size: 1.35rem;
+    }
+
+    .sync-badge {
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+    }
+
+    .sync-badge--pending { background: #fef3c7; color: var(--color-warning); }
+    .sync-badge--success { background: #dcfce7; color: var(--color-success); }
+    .sync-badge--local   { background: #e0e7ff; color: var(--color-primary); }
+
+    .score-summary {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #eff6ff;
+      border: 5px solid var(--color-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .score-circle__number {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--color-primary);
+    }
+
+    .score-circle__percent {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+    }
+
+    .score-details p {
+      margin: 0.3rem 0;
+      font-size: 0.95rem;
+    }
+
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 0.65rem;
+      background: #f8fafc;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 0.85rem;
+      margin-top: 1rem;
+      font-size: 0.88rem;
+    }
+
+    .cefr-tag {
+      display: inline-block;
+      background: var(--color-primary);
+      color: #ffffff;
+      padding: 0.15rem 0.6rem;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+      padding-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header__container">
+      <div class="header__badge">CEFR Level B1 / B2 • Intermediate By MEEVA Abraham Jacob Rivera Moreno</div>
+      <h1 class="header__title">English Grammar Assessment</h1>
+      <p class="header__subtitle">Complete your candidate details and answer all 20 randomized items to receive your diagnostic score.</p>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- Barra sticky con Progreso, Cronómetro e Indicador de Pestañas -->
+    <div class="status-bar" aria-live="polite">
+      <div class="status-bar__top">
+        <span id="progress-text">Progreso: 0 / 20 (0%)</span>
+        <div class="status-bar__metrics">
+          <span class="metric-pill metric-pill--timer" title="Tiempo transcurrido desde el inicio">
+            ⏱ Tiempo: <strong id="elapsed-timer">00:00</strong>
+          </span>
+          <span id="tab-switch-pill" class="metric-pill" title="Salidas detectadas de la ventana del examen">
+            👁 Salidas: <strong id="tab-switch-count">0</strong>
+          </span>
+        </div>
+      </div>
+      <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-labelledby="progress-text">
+        <div class="progress-bar__fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <div id="tab-warning-banner" class="tab-alert" role="alert">
+      ⚠ Aviso de Integridad: Se ha detectado que saliste de la pestaña del examen. Este evento queda registrado en tu reporte final.
+    </div>
+
+    <form id="exam-form" class="exam-form" novalidate>
+      <section class="card card--candidate" aria-labelledby="candidate-heading">
+        <h2 id="candidate-heading" class="card__title">1. Datos del Candidato / Student Information</h2>
+        <p class="card__desc">Todos los campos son obligatorios. Solo se permite un envío por correo electrónico.</p>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="first-name" class="form-group__label">Nombre(s) <span aria-hidden="true">*</span></label>
+            <input type="text" id="first-name" name="firstName" class="form-group__input" required placeholder="Ej. Ana Sofía" autocomplete="given-name">
+            <span class="form-group__error" id="error-first-name" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="last-name" class="form-group__label">Apellidos <span aria-hidden="true">*</span></label>
+            <input type="text" id="last-name" name="lastName" class="form-group__input" required placeholder="Ej. Martínez López" autocomplete="family-name">
+            <span class="form-group__error" id="error-last-name" role="alert"></span>
+          </div>
+
+          <div class="form-group form-group--full">
+            <label for="email" class="form-group__label">Correo Electrónico <span aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" class="form-group__input" required placeholder="alumno@institucion.edu.mx" autocomplete="email">
+            <span class="form-group__error" id="error-email" role="alert"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card card--questions" aria-labelledby="questions-heading">
+        <h2 id="questions-heading" class="card__title">2. Intermediate Grammar Test (20 Randomized Items)</h2>
+        <p class="card__desc">Choose the option (a, b, c, or d) that best completes each sentence.</p>
+        <div id="questions-container" class="questions-list"></div>
+      </section>
+
+      <div class="actions">
+        <button type="submit" id="submit-btn" class="btn btn--primary">
+          Finalizar y Enviar Resultados
+        </button>
+        <button type="button" id="export-csv-btn" class="btn btn--secondary" title="Descargar historial de resultados en formato compatible con Excel">
+          📊 Exportar Base a Excel (.CSV)
+        </button>
+      </div>
+    </form>
+
+    <section id="results-panel" class="card card--results hidden" aria-live="polite" tabindex="-1">
+      <div class="results-header">
+        <h2 class="results-header__title">Resultados de la Evaluación</h2>
+        <div id="sync-status" class="sync-badge sync-badge--pending">Sincronizando...</div>
+      </div>
+
+      <div class="score-summary">
+        <div class="score-circle">
+          <span id="score-value" class="score-circle__number">0/20</span>
+          <span id="score-percentage" class="score-circle__percent">0%</span>
+        </div>
+        <div class="score-details">
+          <p><strong>Candidato:</strong> <span id="res-fullname"></span></p>
+          <p><strong>Correo:</strong> <span id="res-email"></span></p>
+          <p><strong>Nivel Estimado MCER:</strong> <span id="res-cefr" class="cefr-tag"></span></p>
+          <p id="res-feedback" class="score-details__feedback"></p>
+        </div>
+      </div>
+
+      <div class="time-grid">
+        <div><strong>🟢 Inicio:</strong> <span id="res-start-time"></span></div>
+        <div><strong>🔴 Término:</strong> <span id="res-end-time"></span></div>
+        <div><strong>⏱ Duración Total:</strong> <span id="res-duration"></span></div>
+        <div><strong>👁 Salidas de pestaña:</strong> <span id="res-tab-switches">0</span></div>
+      </div>
+
+      <div class="results-actions">
+        <button type="button" id="download-pdf-btn" class="btn btn--pdf">
+          📄 Descargar Boleta en PDF
+        </button>
+        <button type="button" id="download-single-csv" class="btn btn--secondary">
+          📥 Descargar Mi Boleta (.CSV)
+        </button>
+        <button type="button" id="reset-btn" class="btn btn--outline">
+          Realizar Nuevo Intento
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Evaluación Diagnóstica de Inglés • Alineada al MCER (B1/B2)</p>
+  </footer>
+
+  <!-- SDK Compat de Firebase (Compatible con file:/// y GitHub Pages) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+  <script>
+    // ============================================================================
+    // 1. CONFIGURACIÓN DE FIREBASE FIRESTORE (Reemplaza con los datos de tu proyecto)
+    // ============================================================================
+   const firebaseConfig = {
+    apiKey: "AIzaSyBFCB9QrktaD8Gyijl6aj5tfZjiF8qsg3s",
+    authDomain: "oxford-b1b2-intermediate-gram.firebaseapp.com",
+    projectId: "oxford-b1b2-intermediate-gram",
+    storageBucket: "oxford-b1b2-intermediate-gram.firebasestorage.app",
+    messagingSenderId: "1026290948359",
+    appId: "1:1026290948359:web:7bbba3eeea31c4e7148da2",
+    measurementId: "G-FZDL0DBGN4"
+  };
+
+    let db = null;
+    const COLLECTION_NAME = "intermediate_exam_results";
+    const LOCAL_STORAGE_KEY = "intermediate_exam_records_v1";
+    const QUESTIONS_PER_EXAM = 20;
+
+    try {
+      if (typeof firebase !== "undefined" && firebaseConfig.apiKey !== "TU_API_KEY") {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+      }
+    } catch (error) {
+      console.warn("Firebase no inicializado. Se usará respaldo local:", error);
+    }
+
+    // ============================================================================
+    // 2. BANCO COMPLETO DE 30 REACTIVOS NIVEL INTERMEDIO (B1-B2)
+    // ============================================================================
+    const QUESTION_BANK = [
+      { id: "Q01", topic: "Present Tenses", prompt: "I'm busy at the moment. ______ on the computer.", options: ["I work", "I'm work", "I'm working", "I working"], answer: 2 },
+      { id: "Q02", topic: "Stative Verbs", prompt: "My friend ______ the answer to the question.", options: ["is know", "know", "knowing", "knows"], answer: 3 },
+      { id: "Q03", topic: "Question Formation", prompt: "Where ______ the car?", options: ["did you park", "did you parked", "parked you", "you parked"], answer: 0 },
+      { id: "Q04", topic: "Future Arrangements", prompt: "______ a party next Saturday. We've sent out the invitations.", options: ["We had", "We have", "We'll have", "We're having"], answer: 3 },
+      { id: "Q05", topic: "Time Clauses", prompt: "I'll tell Anna all the news when ______ her.", options: ["I'll see", "I'm going to see", "I see", "I shall see"], answer: 2 },
+      { id: "Q06", topic: "Future Continuous", prompt: "At this time tomorrow ______ over the Atlantic.", options: ["we flying", "we'll be flying", "we'll fly", "we to fly"], answer: 1 },
+      { id: "Q07", topic: "Necessity & Obligation", prompt: "There was no one else at the box office. I ______ in a queue.", options: ["didn't need to wait", "mustn't wait", "needn't have waited", "needn't wait"], answer: 0 },
+      { id: "Q08", topic: "Offers & Suggestions", prompt: "______ I carry that bag for you? ~ Oh, thank you.", options: ["Do", "Shall", "Will", "Would"], answer: 1 },
+      { id: "Q09", topic: "Past Regret / Advice", prompt: "I've lost the key. I ought ______ it in a safe place.", options: ["that I put", "to be putting", "to have put", "to put"], answer: 2 },
+      { id: "Q10", topic: "Used to / Be used to", prompt: "I didn't like it in the city at first. But now ______ here.", options: ["I got used to living", "I'm used to living", "I used to live", "I used to living"], answer: 1 },
+      { id: "Q11", topic: "Preposition + Gerund", prompt: "They raised the money simply ______ for it. It was easy.", options: ["asking", "by asking", "of asking", "with asking"], answer: 1 },
+      { id: "Q12", topic: "Perception Verbs", prompt: "As we walked past, we saw Dan ______ his car.", options: ["in washing", "to wash", "wash", "washing"], answer: 3 },
+      { id: "Q13", topic: "Countable / Uncountable", prompt: "I need to buy ______.", options: ["a bread", "a loaf bread", "a loaf of bread", "breads"], answer: 2 },
+      { id: "Q14", topic: "Plural Nouns", prompt: "The ______ produced at our factory in Scotland.", options: ["good are", "good is", "goods are", "goods is"], answer: 2 },
+      { id: "Q15", topic: "Adjectives vs Adverbs", prompt: "The young man seems very ______.", options: ["sensible", "sensiblely", "sensibley", "sensibly"], answer: 0 },
+      { id: "Q16", topic: "Adverbs of Degree", prompt: "I ______ missed the bus. I was only just in time to catch it.", options: ["mostly", "near", "nearest", "nearly"], answer: 3 },
+      { id: "Q17", topic: "Comparatives", prompt: "This detailed map is ______ the atlas.", options: ["more useful as", "more useful than", "usefuller as", "usefuller than"], answer: 1 },
+      { id: "Q18", topic: "Phrasal Verbs", prompt: "My father used the money he won to set ______ his own company.", options: ["forward", "on", "out", "up"], answer: 3 },
+      { id: "Q19", topic: "Reported Speech", prompt: "Last week Justin said 'I'll do it tomorrow.' He said he would do it ______.", options: ["the following day", "the previous day", "tomorrow", "yesterday"], answer: 0 },
+      { id: "Q20", topic: "Purpose Clauses", prompt: "Anna put the electric fire on ______ warm.", options: ["for getting", "in order get", "so she gets", "to get"], answer: 3 },
+      { id: "Q21", topic: "Relative Clauses", prompt: "At last I've found the information that I was looking ______.", options: ["for", "for it", "for that", "it"], answer: 0 },
+      { id: "Q22", topic: "Participle Clauses", prompt: "Everyone ______ the building was searched by the police.", options: ["enter", "entered", "entering", "enters"], answer: 2 },
+      { id: "Q23", topic: "Relative Pronouns", prompt: "The plane ______ has just taken off is an hour late.", options: ["it", "what", "which", "who"], answer: 2 },
+      { id: "Q24", topic: "Non-defining Clauses", prompt: "My friend Dan, ______ works in the City, earns much more than I do.", options: ["that", "which", "who", "whose"], answer: 2 },
+      { id: "Q25", topic: "Third Conditional", prompt: "If I had known about the traffic, I ______ earlier.", options: ["would leave", "had left", "would have left", "will have left"], answer: 2 },
+      { id: "Q26", topic: "Second Conditional", prompt: "What would you do if you ______ a wallet full of money in the street?", options: ["find", "found", "would find", "had found"], answer: 1 },
+      { id: "Q27", topic: "Prepositions of Time", prompt: "Could you let me know ______ Friday at the latest?", options: ["by", "to", "up to", "until"], answer: 0 },
+      { id: "Q28", topic: "Present Perfect + Since", prompt: "I've lived here ______ last year.", options: ["after", "by", "for", "since"], answer: 3 },
+      { id: "Q29", topic: "Quantifiers", prompt: "Peter has two brothers, but he doesn't speak to ______ of them.", options: ["any", "both", "either", "neither"], answer: 2 },
+      { id: "Q30", topic: "Pronouns & Reflexives", prompt: "We've brought some food with ______ to eat during the journey.", options: ["me", "ourselves", "us", "we"], answer: 2 }
+    ];
+
+    // ============================================================================
+    // 3. CONTROL DE TIEMPO (INICIO, FIN, DURACIÓN) E INTEGRIDAD DE PESTAÑA
+    // ============================================================================
+    let examStartTime = null;
+    let timerInterval = null;
+    let examFinished = false;
+    let tabSwitchCount = 0;
+
+    function formatDuration(ms) {
+      const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      const pad = n => String(n).padStart(2, "0");
+      return hours > 0
+        ? `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`
+        : `${pad(minutes)}:${pad(seconds)}`;
+    }
+
+    function startExamTimer() {
+      examStartTime = new Date();
+      examFinished = false;
+      tabSwitchCount = 0;
+      document.getElementById("tab-switch-count").textContent = "0";
+      document.getElementById("tab-switch-pill").classList.remove("metric-pill--warning");
+      document.getElementById("tab-warning-banner").style.display = "none";
+      document.getElementById("elapsed-timer").textContent = "00:00";
+
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (!examFinished && examStartTime) {
+          const elapsed = Date.now() - examStartTime.getTime();
+          document.getElementById("elapsed-timer").textContent = formatDuration(elapsed);
+        }
+      }, 1000);
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden && !examFinished) {
+        tabSwitchCount++;
+        document.getElementById("tab-switch-count").textContent = String(tabSwitchCount);
+        document.getElementById("tab-switch-pill").classList.add("metric-pill--warning");
+        document.getElementById("tab-warning-banner").style.display = "block";
+      }
+    });
+
+    // ============================================================================
+    // 4. ALGORITMO FISHER-YATES PARA MEZCLAR PREGUNTAS Y OPCIONES
+    // ============================================================================
+    function shuffleArray(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function generateRandomizedExam() {
+      const selectedQuestions = shuffleArray(QUESTION_BANK).slice(0, QUESTIONS_PER_EXAM);
+      return selectedQuestions.map(q => {
+        const correctOptionText = q.options[q.answer];
+        const shuffledOptions = shuffleArray(q.options);
+        const newAnswerIndex = shuffledOptions.indexOf(correctOptionText);
+
+        return {
+          ...q,
+          options: shuffledOptions,
+          answer: newAnswerIndex
+        };
+      });
+    }
+
+    // ============================================================================
+    // 5. UTILIDADES DE SEGURIDAD Y SANITIZACIÓN
+    // ============================================================================
+    function sanitizeText(str) {
+      const div = document.createElement("div");
+      div.textContent = str.trim();
+      return div.innerHTML;
+    }
+
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    // ============================================================================
+    // 6. RENDERIZADO DEL EXAMEN Y CONTROL DE PROGRESO
+    // ============================================================================
+    const questionsContainer = document.getElementById("questions-container");
+    const examForm = document.getElementById("exam-form");
+    const progressFill = document.getElementById("progress-fill");
+    const progressText = document.getElementById("progress-text");
+    const progressBar = document.querySelector(".progress-bar");
+
+    let activeExamQuestions = [];
+    let lastSubmissionRecord = null;
+    let lastDetailedBreakdown = [];
+
+    function renderQuestions() {
+      activeExamQuestions = generateRandomizedExam();
+      questionsContainer.innerHTML = "";
+      const letters = ["a", "b", "c", "d"];
+
+      activeExamQuestions.forEach((q, index) => {
+        const article = document.createElement("article");
+        article.className = "question-item";
+        article.id = `question-card-${q.id}`;
+
+        const optionsHtml = q.options.map((opt, optIdx) => `
+          <label class="option-label" id="label-${q.id}-opt${optIdx}">
+            <input type="radio" name="q_${q.id}" value="${optIdx}" required aria-label="Pregunta ${index + 1}, opción ${letters[optIdx]}: ${opt}">
+            <span><strong>${letters[optIdx]})</strong> ${opt}</span>
+          </label>
+        `).join("");
+
+        article.innerHTML = `
+          <div class="question-item__header">
+            <p class="question-item__prompt">${index + 1}. ${q.prompt}</p>
+            <span class="question-item__topic">${q.topic}</span>
+          </div>
+          <fieldset class="options-grid" aria-label="Opciones para la pregunta ${index + 1}">
+            ${optionsHtml}
+          </fieldset>
+        `;
+        questionsContainer.appendChild(article);
+      });
+    }
+
+    function updateProgress() {
+      const answered = activeExamQuestions.filter(q =>
+        document.querySelector(`input[name="q_${q.id}"]:checked`)
+      ).length;
+      const total = activeExamQuestions.length;
+      const percent = Math.round((answered / total) * 100);
+
+      progressFill.style.width = `${percent}%`;
+      progressText.textContent = `Progreso: ${answered} / ${total} (${percent}%)`;
+      progressBar.setAttribute("aria-valuenow", percent);
+    }
+
+    // ============================================================================
+    // 7. VALIDACIÓN, CONTROL DE DUPLICADOS, CALIFICACIÓN Y FIRESTORE
+    // ============================================================================
+    function validateCandidateFields() {
+      let isValid = true;
+      const firstNameInput = document.getElementById("first-name");
+      const lastNameInput = document.getElementById("last-name");
+      const emailInput = document.getElementById("email");
+
+      const errFirst = document.getElementById("error-first-name");
+      const errLast = document.getElementById("error-last-name");
+      const errEmail = document.getElementById("error-email");
+
+      errFirst.textContent = "";
+      errLast.textContent = "";
+      errEmail.textContent = "";
+      [firstNameInput, lastNameInput, emailInput].forEach(el => el.setAttribute("aria-invalid", "false"));
+
+      if (firstNameInput.value.trim().length < 2) {
+        errFirst.textContent = "Por favor ingresa tu(s) nombre(s).";
+        firstNameInput.setAttribute("aria-invalid", "true");
+        isValid = false;
+      }
+
+      if (lastNameInput.value.trim().length < 2) {
+        errLast.textContent = "Por favor ingresa tus apellidos.";
+        lastNameInput.setAttribute("aria-invalid", "true");
+        isValid = false;
+      }
+
+      if (!isValidEmail(emailInput.value.trim())) {
+        errEmail.textContent = "Ingresa un correo electrónico válido.";
+        emailInput.setAttribute("aria-invalid", "true");
+        isValid = false;
+      }
+
+      return isValid;
+    }
+
+    async function isEmailAlreadySubmitted(email) {
+      const normalized = email.trim().toLowerCase();
+
+      // 1. Verificar en respaldo local
+      const existingLocal = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
+      if (existingLocal.some(r => (r.correo || "").toLowerCase() === normalized)) {
+        return true;
+      }
+
+      // 2. Verificar en Firestore si está conectado
+      if (db) {
+        try {
+          const snapshot = await db.collection(COLLECTION_NAME)
+            .where("correoNormalizado", "==", normalized)
+            .limit(1)
+            .get();
+          if (!snapshot.empty) return true;
+        } catch (error) {
+          console.warn("No se pudo verificar duplicado en Firestore:", error);
+        }
+      }
+
+      return false;
+    }
+
+    function determineCEFRLevel(percentage) {
+      if (percentage >= 85) return { level: "B2 (Upper-Intermediate)", feedback: "Excelente dominio de estructuras intermedias. Listo para avanzar a nivel B2 sólido." };
+      if (percentage >= 65) return { level: "B1+ (Intermediate)", feedback: "Buen manejo general de la gramática intermedia. Se recomienda reforzar cláusulas complejas y tiempos perfectos." };
+      if (percentage >= 45) return { level: "B1 (Threshold)", feedback: "Nivel intermedio inicial. Conviene repasar tiempos verbales narrativos y verbos modales." };
+      return { level: "A2+ (Pre-Intermediate)", feedback: "Se sugiere consolidar las estructuras base antes de cursar el nivel intermedio completo." };
+    }
+
+    async function saveRecordToCloudAndLocal(record) {
+      const existing = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
+      existing.push(record);
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(existing));
+
+      const syncBadge = document.getElementById("sync-status");
+      if (!db) {
+        syncBadge.textContent = "Guardado Localmente (Configura Firebase para nube)";
+        syncBadge.className = "sync-badge sync-badge--local";
+        return;
+      }
+
+      try {
+        await db.collection(COLLECTION_NAME).add({
+          ...record,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        syncBadge.textContent = "✓ Sincronizado con Firestore Database";
+        syncBadge.className = "sync-badge sync-badge--success";
+      } catch (error) {
+        console.error("Error al guardar en Firestore:", error);
+        syncBadge.textContent = "⚠ Guardado local (Error de red con Firestore)";
+        syncBadge.className = "sync-badge sync-badge--pending";
+      }
+    }
+
+    async function handleExamSubmit(event) {
+      event.preventDefault();
+
+      const candidateValid = validateCandidateFields();
+      let firstUnansweredElement = null;
+      let score = 0;
+      const userAnswers = {};
+      const breakdown = [];
+
+      activeExamQuestions.forEach((q, idx) => {
+        const card = document.getElementById(`question-card-${q.id}`);
+        card.classList.remove("question-item--unanswered");
+        const selected = document.querySelector(`input[name="q_${q.id}"]:checked`);
+
+        if (!selected) {
+          card.classList.add("question-item--unanswered");
+          if (!firstUnansweredElement) firstUnansweredElement = card;
+        } else {
+          const chosenIdx = parseInt(selected.value, 10);
+          const isCorrect = chosenIdx === q.answer;
+          userAnswers[q.id] = `${q.options[chosenIdx]} (${isCorrect ? "OK" : "X"})`;
+          if (isCorrect) score++;
+
+          breakdown.push({
+            num: idx + 1,
+            id: q.id,
+            topic: q.topic,
+            prompt: q.prompt,
+            chosen: q.options[chosenIdx],
+            correct: q.options[q.answer],
+            isCorrect
+          });
+        }
+      });
+
+      if (!candidateValid) {
+        document.getElementById("first-name").focus();
+        return;
+      }
+
+      if (firstUnansweredElement) {
+        firstUnansweredElement.scrollIntoView({ behavior: "smooth", block: "center" });
+        alert("Por favor responde todas las preguntas marcadas en rojo antes de enviar.");
+        return;
+      }
+
+      const submitBtn = document.getElementById("submit-btn");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Verificando y guardando...";
+
+      const rawEmail = document.getElementById("email").value.trim();
+      const duplicate = await isEmailAlreadySubmitted(rawEmail);
+      if (duplicate) {
+        document.getElementById("error-email").textContent = "Este correo electrónico ya registró un examen previamente.";
+        document.getElementById("email").setAttribute("aria-invalid", "true");
+        document.getElementById("email").focus();
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Finalizar y Enviar Resultados";
+        return;
+      }
+
+      // Detener cronómetro y calcular tiempos exactos
+      examFinished = true;
+      clearInterval(timerInterval);
+      const examEndTime = new Date();
+      const durationFormatted = formatDuration(examEndTime.getTime() - examStartTime.getTime());
+
+      // Marcar visualmente respuestas correctas e incorrectas
+      activeExamQuestions.forEach(q => {
+        const selected = document.querySelector(`input[name="q_${q.id}"]:checked`);
+        const chosenIdx = parseInt(selected.value, 10);
+        document.getElementById(`label-${q.id}-opt${q.answer}`).classList.add("option-label--correct");
+        if (chosenIdx !== q.answer) {
+          document.getElementById(`label-${q.id}-opt${chosenIdx}`).classList.add("option-label--incorrect");
+        }
+        document.querySelectorAll(`input[name="q_${q.id}"]`).forEach(inp => inp.disabled = true);
+      });
+
+      const total = activeExamQuestions.length;
+      const percentage = Math.round((score / total) * 100);
+      const cefr = determineCEFRLevel(percentage);
+
+      const record = {
+        fecha: examEndTime.toLocaleDateString("es-MX"),
+        horaInicio: examStartTime.toLocaleTimeString("es-MX"),
+        horaTermino: examEndTime.toLocaleTimeString("es-MX"),
+        duracion: durationFormatted,
+        cambiosPestana: tabSwitchCount,
+        nombres: sanitizeText(document.getElementById("first-name").value),
+        apellidos: sanitizeText(document.getElementById("last-name").value),
+        correo: sanitizeText(rawEmail),
+        correoNormalizado: rawEmail.toLowerCase(),
+        aciertos: score,
+        totalReactivos: total,
+        porcentaje: `${percentage}%`,
+        nivelMCER: cefr.level,
+        respuestas: userAnswers
+      };
+
+      lastSubmissionRecord = record;
+      lastDetailedBreakdown = breakdown;
+
+      // Actualizar panel de resultados
+      document.getElementById("score-value").textContent = `${score}/${total}`;
+      document.getElementById("score-percentage").textContent = `${percentage}%`;
+      document.getElementById("res-fullname").textContent = `${record.nombres} ${record.apellidos}`;
+      document.getElementById("res-email").textContent = record.correo;
+      document.getElementById("res-cefr").textContent = record.nivelMCER;
+      document.getElementById("res-feedback").textContent = cefr.feedback;
+      document.getElementById("res-start-time").textContent = record.horaInicio;
+      document.getElementById("res-end-time").textContent = record.horaTermino;
+      document.getElementById("res-duration").textContent = record.duracion;
+      document.getElementById("res-tab-switches").textContent = String(record.cambiosPestana);
+
+      const resultsPanel = document.getElementById("results-panel");
+      resultsPanel.classList.remove("hidden");
+      resultsPanel.focus();
+      resultsPanel.scrollIntoView({ behavior: "smooth" });
+      submitBtn.textContent = "Examen Enviado ✓";
+
+      await saveRecordToCloudAndLocal(record);
+    }
+
+    // ============================================================================
+    // 8. GENERACIÓN DE REPORTE / BOLETA EN PDF (Ventana de Impresión Estilizada)
+    // ============================================================================
+    function generatePDFReport() {
+      if (!lastSubmissionRecord) {
+        alert("Primero debes finalizar y enviar el examen para generar tu PDF.");
+        return;
+      }
+
+      const r = lastSubmissionRecord;
+      const rowsHtml = lastDetailedBreakdown.map(item => `
+        <tr>
+          <td style="text-align:center;">${item.num}</td>
+          <td>${item.topic}</td>
+          <td>${item.prompt}</td>
+          <td style="color:${item.isCorrect ? "#15803d" : "#b91c1c"}; font-weight:600;">
+            ${item.chosen} ${item.isCorrect ? "✓" : "✗"}
+          </td>
+          <td>${item.correct}</td>
+        </tr>
+      `).join("");
+
+      const printWindow = window.open("", "_blank", "width=900,height=750");
+      if (!printWindow) {
+        alert("Por favor permite las ventanas emergentes en tu navegador para generar el PDF.");
+        return;
+      }
+
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+          <meta charset="UTF-8">
+          <title>Boleta_Resultados_${r.apellidos}_${r.nombres}</title>
+          <style>
+            @page { size: letter; margin: 14mm; }
+            body {
+              font-family: 'Segoe UI', Arial, sans-serif;
+              color: #0f172a;
+              margin: 0;
+              padding: 0;
+              font-size: 11px;
+              line-height: 1.45;
+            }
+            .header {
+              background: #1e3a8a;
+              color: #ffffff;
+              padding: 16px 20px;
+              border-radius: 8px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 14px;
+              -webkit-print-color-adjust: exact;
+              print-color-adjust: exact;
+            }
+            .header h1 { margin: 0; font-size: 18px; }
+            .header p { margin: 2px 0 0; font-size: 11px; color: #dbeafe; }
+            .badge {
+              background: #ffffff;
+              color: #1e3a8a;
+              font-weight: 800;
+              padding: 6px 12px;
+              border-radius: 6px;
+              font-size: 13px;
+            }
+            .info-grid {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 8px 16px;
+              background: #f8fafc;
+              border: 1px solid #cbd5e1;
+              border-radius: 8px;
+              padding: 12px 16px;
+              margin-bottom: 14px;
+              -webkit-print-color-adjust: exact;
+              print-color-adjust: exact;
+            }
+            .info-grid div { font-size: 11.5px; }
+            .summary-box {
+              display: flex;
+              justify-content: space-around;
+              background: #eff6ff;
+              border: 1.5px solid #1e40af;
+              border-radius: 8px;
+              padding: 10px;
+              margin-bottom: 14px;
+              text-align: center;
+              -webkit-print-color-adjust: exact;
+              print-color-adjust: exact;
+            }
+            .summary-box strong { display: block; font-size: 16px; color: #1e3a8a; }
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              font-size: 10px;
+            }
+            th {
+              background: #0f172a;
+              color: #ffffff;
+              padding: 6px;
+              text-align: left;
+              -webkit-print-color-adjust: exact;
+              print-color-adjust: exact;
+            }
+            td {
+              border-bottom: 1px solid #cbd5e1;
+              padding: 5px 6px;
+              vertical-align: top;
+            }
+            tr:nth-child(even) {
+              background: #f8fafc;
+              -webkit-print-color-adjust: exact;
+              print-color-adjust: exact;
+            }
+            .footer-note {
+              margin-top: 14px;
+              font-size: 10px;
+              color: #475569;
+              text-align: center;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <div>
+              <h1>Reporte Oficial de Evaluación Diagnóstica</h1>
+              <p>Intermediate English Grammar Assessment • Marco Común Europeo (B1/B2)</p>
+            </div>
+            <div class="badge">${r.nivelMCER}</div>
+          </div>
+
+          <div class="info-grid">
+            <div><strong>Candidato:</strong> ${r.nombres} ${r.apellidos}</div>
+            <div><strong>Fecha de aplicación:</strong> ${r.fecha}</div>
+            <div><strong>Correo electrónico:</strong> ${r.correo}</div>
+            <div><strong>Horario:</strong> ${r.horaInicio} – ${r.horaTermino} (Duración: ${r.duracion})</div>
+            <div><strong>Salidas de pestaña detectadas:</strong> ${r.cambiosPestana}</div>
+            <div><strong>Folio de verificación:</strong> ${Date.now().toString(36).toUpperCase()}</div>
+          </div>
+
+          <div class="summary-box">
+            <div><span>Aciertos</span><strong>${r.aciertos} / ${r.totalReactivos}</strong></div>
+            <div><span>Calificación</span><strong>${r.porcentaje}</strong></div>
+            <div><span>Nivel Estimado</span><strong>${r.nivelMCER}</strong></div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th style="width:28px; text-align:center;">#</th>
+                <th style="width:110px;">Tema</th>
+                <th>Reactivo</th>
+                <th style="width:130px;">Respuesta del Alumno</th>
+                <th style="width:120px;">Respuesta Correcta</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rowsHtml}
+            </tbody>
+          </table>
+
+          <p class="footer-note">
+            Documento generado automáticamente. Para guardar como archivo PDF, selecciona "Guardar como PDF" en el destino de impresión.
+          </p>
+
+          <script>
+            window.onload = function() {
+              setTimeout(function() { window.print(); }, 250);
+            };
+          <\/script>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+    }
+
+    // ============================================================================
+    // 9. EXPORTACIÓN A HOJA DE CÁLCULO (.CSV)
+    // ============================================================================
+    function downloadCSV(records, filename) {
+      if (!records || records.length === 0) {
+        alert("Aún no hay registros guardados para exportar.");
+        return;
+      }
+
+      const headers = [
+        "Fecha", "Hora Inicio", "Hora Termino", "Duracion",
+        "Nombres", "Apellidos", "Correo Electronico",
+        "Aciertos", "Total", "Porcentaje", "Nivel MCER", "Salidas Pestana"
+      ];
+
+      const rows = records.map(r => [
+        `"${r.fecha || ""}"`,
+        `"${r.horaInicio || ""}"`,
+        `"${r.horaTermino || ""}"`,
+        `"${r.duracion || ""}"`,
+        `"${r.nombres || ""}"`,
+        `"${r.apellidos || ""}"`,
+        `"${r.correo || ""}"`,
+        r.aciertos,
+        r.totalReactivos,
+        `"${r.porcentaje}"`,
+        `"${r.nivelMCER}"`,
+        r.cambiosPestana ?? 0
+      ].join(","));
+
+      const csvContent = "\uFEFF" + [headers.join(","), ...rows].join("\n");
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    async function exportAllRecords() {
+      let records = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
+
+      if (db) {
+        try {
+          const snapshot = await db.collection(COLLECTION_NAME).orderBy("createdAt", "desc").get();
+          if (!snapshot.empty) {
+            records = snapshot.docs.map(doc => doc.data());
+          }
+        } catch (error) {
+          console.warn("No se pudo leer de Firestore, exportando respaldo local:", error);
+        }
+      }
+
+      const dateStr = new Date().toISOString().slice(0, 10);
+      downloadCSV(records, `Resultados_Examen_Intermedio_${dateStr}.csv`);
+    }
+
+    // ============================================================================
+    // 10. INICIALIZACIÓN DIRECTA
+    // ============================================================================
+    renderQuestions();
+    startExamTimer();
+
+    questionsContainer.addEventListener("change", updateProgress);
+    examForm.addEventListener("submit", handleExamSubmit);
+
+    document.getElementById("export-csv-btn").addEventListener("click", exportAllRecords);
+    document.getElementById("download-pdf-btn").addEventListener("click", generatePDFReport);
+    document.getElementById("download-single-csv").addEventListener("click", () => {
+      if (lastSubmissionRecord) {
+        downloadCSV([lastSubmissionRecord], `Boleta_${lastSubmissionRecord.apellidos}_${lastSubmissionRecord.nombres}.csv`);
+      }
+    });
+
+    document.getElementById("reset-btn").addEventListener("click", () => {
+      examForm.reset();
+      const submitBtn = document.getElementById("submit-btn");
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Finalizar y Enviar Resultados";
+      document.getElementById("results-panel").classList.add("hidden");
+      renderQuestions();
+      updateProgress();
+      startExamTimer();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>
