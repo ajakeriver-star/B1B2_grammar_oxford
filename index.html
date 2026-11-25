@@ -631,6 +631,7 @@
     let db = null;
     const COLLECTION_NAME = "intermediate_exam_results";
     const LOCAL_STORAGE_KEY = "intermediate_exam_records_v1";
+    const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyOOmIpIt0dPpvVR5aJi4ouQJrQT25KzehvzxMd1BdeLkCcEh0NdoftCUeh1Hr3N08/exec";
     const QUESTIONS_PER_EXAM = 20;
 
     try {
@@ -891,29 +892,53 @@
       return { level: "A2+ (Pre-Intermediate)", feedback: "Se sugiere consolidar las estructuras base antes de cursar el nivel intermedio completo." };
     }
 
-    async function saveRecordToCloudAndLocal(record) {
+async function saveRecordToCloudAndLocal(record) {
       const existing = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
       existing.push(record);
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(existing));
 
       const syncBadge = document.getElementById("sync-status");
-      if (!db) {
-        syncBadge.textContent = "Guardado Localmente (Configura Firebase para nube)";
-        syncBadge.className = "sync-badge sync-badge--local";
-        return;
+      let firestoreOk = false;
+      let sheetsOk = false;
+
+      // 1. Guardar en Firebase Firestore
+      if (db) {
+        try {
+          await db.collection(COLLECTION_NAME).add({
+            ...record,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          firestoreOk = true;
+        } catch (error) {
+          console.error("Error en Firestore:", error);
+        }
       }
 
-      try {
-        await db.collection(COLLECTION_NAME).add({
-          ...record,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        syncBadge.textContent = "✓ Sincronizado con Firestore Database";
+      // 2. Guardar en Google Sheets (usando text/plain para evitar preflight CORS)
+      if (GOOGLE_SHEETS_WEBAPP_URL && GOOGLE_SHEETS_WEBAPP_URL.startsWith("https://")) {
+        try {
+          await fetch(GOOGLE_SHEETS_WEBAPP_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(record)
+          });
+          sheetsOk = true;
+        } catch (error) {
+          console.error("Error en Google Sheets:", error);
+        }
+      }
+
+      // Actualizar indicador visual
+      if (firestoreOk && sheetsOk) {
+        syncBadge.textContent = "✓ Guardado en Firestore y Google Sheets";
         syncBadge.className = "sync-badge sync-badge--success";
-      } catch (error) {
-        console.error("Error al guardar en Firestore:", error);
-        syncBadge.textContent = "⚠ Guardado local (Error de red con Firestore)";
-        syncBadge.className = "sync-badge sync-badge--pending";
+      } else if (firestoreOk || sheetsOk) {
+        syncBadge.textContent = `✓ Guardado en ${firestoreOk ? "Firestore" : "Google Sheets"}`;
+        syncBadge.className = "sync-badge sync-badge--success";
+      } else {
+        syncBadge.textContent = "Guardado Localmente";
+        syncBadge.className = "sync-badge sync-badge--local";
       }
     }
 
